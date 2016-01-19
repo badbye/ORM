@@ -17,12 +17,11 @@ class MetaModel(type):
         for key, val in dct.iteritems():
             if isinstance(val, Field):
                 attrs[key] = val.val
-                structure.append((key, val.__class__.__name__))
+                structure.append((key, val.__class__))
                 values.append((key, val.parse2db()))
             else:
                 attrs[key] = val
         attrs['structure'] = dict(structure)
-        attrs['values'] = dict(values)
         return super(MetaModel, cls).__new__(cls, clsname, bases, attrs)
 
     def __getattr__(self, key):
@@ -33,7 +32,6 @@ class MetaModel(type):
 
     def __setattr__(self, key, value):
         self[key] = value
-        # self.
 
 class Model(dict):
     __metaclass__ = MetaModel
@@ -41,6 +39,12 @@ class Model(dict):
     def __init__(self, **kw):
         super(Model, self).__init__(**kw)
         self.__slots__ = self.structure.keys()
+
+    # def parse2db(self):
+    #     res = {}
+    #     for key, field in self.structure.iteritems():
+    #         res[key] = field(self.__getattr__(key)).parse2db()
+    #     return res
 
     def __str__(self):
         res = 'Table Structure:\n'

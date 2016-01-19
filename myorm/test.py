@@ -26,14 +26,16 @@ class Hi(Model):
         return '<hi: %s>' %self.hi
 
 
-hi = Hi(hi = 123)
-hi_expr = Expr(hi)
-print hi_expr.insert()
-print hi_expr.update(hi = 456)
+# hi = Hi(hi = 123)
+# hi_expr = Expr(hi)
+# print hi_expr.insert()
+# print hi_expr.update(hi = 456)
+#
+# print '-' * 100
+#
+user = User()
 
 print '-' * 100
-
-user = User()
 user_expr = Expr(user)
 print user_expr.insert()
 print user_expr.update(id = 456)
